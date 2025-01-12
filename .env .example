@@ -1,1 +1,10 @@
 DATABASE_URL="postgresql+asyncpg://{user_database}:{pass_database}@{host_database}:{port_database}/{name_database}"
+BASE_URL_CASHBACK="https://mdaqk8ek5j.execute-api.us-east-1.amazonaws.com/"
+TOKEN_CASHBACK='ZXPURQOARHiMc6Y0flhRC1LVlZQVFRnm'
+
+
+# ELASTIC ENV
+ELASTIC_SERVICE_NAME="o-boticario-service"
+ELASTIC_SERVER_URL=http://apm-server:8200
+ELASTIC_USER=elastic
+ELASTIC_PASSWORD=changeme
