@@ -167,8 +167,16 @@ projeto/
 │           ├── route.py
 │           └── model.py
 ├── .env
+├── .env.example
+├── .gitignore
 ├── alembic.ini
-├── requirements.txt
-└── main.py
+├── docker-compose.yml
+├── Dockerfile
+├── entrypoint.sh
+├── main.py
+├── makefile
+├── poetry.lock
+├── poetry.toml
+└── README.MD
 ```
 # MANOEL MESSIAS DA SILVA NETO
