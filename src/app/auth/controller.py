@@ -54,6 +54,7 @@ class AuthController():
         to_encode = {
                         "full_name":data.full_name,
                         "email":data.email,
+                        "cpf":data.cpf,
                         "phone":data.phone
                         
                     }

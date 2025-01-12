@@ -15,9 +15,9 @@ cashback_controller= CashbackController()
 
 
 #BACKEND-BACKEND-BACKEND-BACKEND-BACKEND-BACKEND-BACKEND-BACKEND-BACKEND-BACKEND-BACKEND-BACKEND-BACKEND-BACKEND-BACKEND-BACKEND-BACKEND-BACKEND-BACKEND-BACKEND#
-@backend.get("/cashback",response_model=CashbackOut, tags=["CACHEBACK"])
+@backend.get("/cashback",response_model=CashbackOut, tags=["CASHBACK"])
 async def get_cashback(token: Annotated[str, Depends(oauth2_scheme)]):  
-    result = jsonable_encoder( await cashback_controller.get_cashback())    
+    result = jsonable_encoder( await cashback_controller.get_cashback(token=token))    
     return result
 
 

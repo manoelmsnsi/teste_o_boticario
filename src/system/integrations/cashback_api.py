@@ -14,8 +14,8 @@ class CashbackAPI:
             base_url (str): URL base da API externa.
             token (str): Token de autenticação necessário para as requisições.
         """
-        self.base_url = os.environ.get("BASE_URL_CACHEBACK")
-        self.token = os.environ.get("TOKEN_CACHEBACK")
+        self.base_url = os.environ.get("BASE_URL_CASHBACK")
+        self.token = os.environ.get("TOKEN_CASHBACK")
 
     #@retry(stop=stop_after_attempt(3), wait=wait_fixed(2))
     async def get_cashback(self, cpf: str = "12312312323") -> CashbackOut:

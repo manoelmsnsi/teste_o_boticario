@@ -84,9 +84,9 @@ class CompraController(ModelCore):
         Define a regra para o campo 'Cashback' com base no VALOR da compra.
         """
         if valor <= 1000:
-            cache_back = "10%"
+            cash_back = "10%"
         elif valor <= 1500:
-            cache_back = "15%"
+            cash_back = "15%"
         else:
-            cache_back = "20%"
-        return cache_back
+            cash_back = "20%"
+        return cash_back
