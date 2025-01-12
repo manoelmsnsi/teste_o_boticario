@@ -1,5 +1,6 @@
 from typing import List
 from src.system.core.model_core import ModelCore
+from src.system.core.utils_core import UtilsCore
 from src.app.revendedor.model import Revendedor, RevendedorIn, RevendedorOut, RevendedorFilter
 
 # Definições de tabela e modelos
@@ -11,6 +12,7 @@ TABLEOUT = RevendedorOut
 class RevendedorController(ModelCore):    
     def __init__(self) -> None:
         super().__init__()
+        self.utils_core = UtilsCore()
         self.TABLE = TABLE
         self.TABLEFILTER = TABLEFILTER
         self.TABLEIN = TABLEIN

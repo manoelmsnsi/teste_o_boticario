@@ -41,12 +41,12 @@ class ModelCore():
             data["update_at"]=datetime.now()
             data["deleted_at"]=None
             async with self.service_database.conexao() as session:               
-                stmt = update(self.TABLE).where(self.TABLE.id == id).values(data).returning(self.TABLE)
+                stmt = update(self.TABLE).where(self.TABLE.id == id,self.TABLE.deleted_at==None).values(data).returning(self.TABLE)
                 result = await session.execute(stmt)
                 updated_record = result.scalars().first()
                 await session.commit()
                 result = await self.core_read(self.TABLEFILTER(id=id))
-                if not updated_record:
+                if len(result)==0:
                     raise ValueError(f"Registro com ID {id} não encontrado.")
             return result[0]
         except Exception as error:
@@ -55,11 +55,12 @@ class ModelCore():
     async def core_delete(self,id):
         try:            
             async with self.service_database.conexao() as session:
-                stmt = update(self.TABLE).where(self.TABLE.id == id).values({"deleted_at":datetime.now()}).returning(self.TABLE)
+                stmt = update(self.TABLE).where(self.TABLE.id == id,self.TABLE.deleted_at==None).values({"deleted_at":datetime.now()}).returning(self.TABLE)
                 result = await session.execute(stmt)
+                updated_record = result.scalars().first()
                 await session.commit()
-                result = await self.core_read(self.TABLEFILTER(id=id))           
-            return result
+                if not updated_record:
+                    raise ValueError(f"Registro com ID {id} não encontrado.")
         except Exception as error:
             raise Exception(f"{error}")
 

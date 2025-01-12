@@ -12,7 +12,7 @@ services:
       - postgres_teste_manoel
       - apm-server
     networks:
-      - network_teste_manoel
+      - teste_manoel_o_boticario_network
 
   postgres_teste_manoel:
     image: postgres
@@ -23,11 +23,11 @@ services:
       POSTGRES_PASSWORD: Example
       POSTGRES_DB: postgres
     volumes:
-      - postgres_data3:/var/lib/postgresql/data 
+      - teste_manoel_o_boticario_postgres:/var/lib/postgresql/data 
     ports:
       - 54321:5432
     networks:
-      - network_teste_manoel
+      - teste_manoel_o_boticario_network
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.17.21
@@ -39,9 +39,9 @@ services:
       - xpack.security.enabled=true
       - ELASTIC_PASSWORD=changeme
     volumes:
-      - esdata:/usr/share/elasticsearch/data
+      - teste_manoel_o_boticario_elastic:/usr/share/elasticsearch/data
     networks:
-      - network_teste_manoel
+      - teste_manoel_o_boticario_network
     logging:
       driver: "json-file"
       options:
@@ -61,7 +61,7 @@ services:
       - xpack.security.enabled=true
       - xpack.encryptedSavedObjects.encryptionKey=779199a2fa2a25a0a31f28b40dac00f7
     networks:
-      - network_teste_manoel
+      - teste_manoel_o_boticario_network
     logging:
       driver: "json-file"
       options:
@@ -92,7 +92,7 @@ services:
       -E setup.kibana.username=elastic
       -E setup.kibana.password=changeme
     networks:
-      - network_teste_manoel
+      - teste_manoel_o_boticario_network
     logging:
       driver: "json-file"
       options:
@@ -100,11 +100,11 @@ services:
         max-file: "100"
 
 networks:
-  network_teste_manoel:
+  teste_manoel_o_boticario_network:
     driver: bridge
 
 
 volumes:
-  postgres_data3:
-  esdata:
+  teste_manoel_o_boticario_postgres:
+  teste_manoel_o_boticario_elastic:
     driver: local
