@@ -1,0 +1,110 @@
+version: '3.8'
+services:
+  api:
+    build: .
+    container_name: api
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:Example@postgres_teste_manoel:5432/teste_manoel
+      API_INOVA_BASE_URL: https://jsonplaceholder.typicode.com
+    ports:
+      - 8002:8002
+    depends_on:
+      - postgres_teste_manoel
+      - apm-server
+    networks:
+      - network_teste_manoel
+
+  postgres_teste_manoel:
+    image: postgres
+    restart: always
+    container_name: postgres_teste_manoel
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Example
+      POSTGRES_DB: postgres
+    volumes:
+      - postgres_data3:/var/lib/postgresql/data 
+    ports:
+      - 54321:5432
+    networks:
+      - network_teste_manoel
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.21
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=true
+      - ELASTIC_PASSWORD=changeme
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    networks:
+      - network_teste_manoel
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "100"
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.17.21
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD=changeme
+      - xpack.security.enabled=true
+      - xpack.encryptedSavedObjects.encryptionKey=779199a2fa2a25a0a31f28b40dac00f7
+    networks:
+      - network_teste_manoel
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "100"
+
+  apm-server:
+    image: docker.elastic.co/apm/apm-server:7.17.21
+    ports:
+      - "8200:8200"
+    depends_on:
+      - elasticsearch
+      - kibana
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD=changeme
+      - KIBANA_HOST=http://kibana:5601
+      - KIBANA_USERNAME=elastic
+      - KIBANA_PASSWORD=changeme
+    command: >
+      apm-server -e
+      -E apm-server.host=0.0.0.0:8200
+      -E output.elasticsearch.hosts=["http://elasticsearch:9200"]
+      -E output.elasticsearch.username=elastic
+      -E output.elasticsearch.password=changeme
+      -E setup.kibana.host=http://kibana:5601
+      -E setup.kibana.username=elastic
+      -E setup.kibana.password=changeme
+    networks:
+      - network_teste_manoel
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "100"
+
+networks:
+  network_teste_manoel:
+    driver: bridge
+
+
+volumes:
+  postgres_data3:
+  esdata:
+    driver: local

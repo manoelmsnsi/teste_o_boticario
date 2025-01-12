@@ -1,0 +1,1 @@
+DATABASE_URL="postgresql+asyncpg://{user_database}:{pass_database}@{host_database}:{port_database}/{name_database}"

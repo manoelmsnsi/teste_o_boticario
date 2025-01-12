@@ -1,0 +1,33 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Executar -> FastAPI",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": [
+        "main:app",
+        "--reload"
+      ],
+      "jinja": true
+    },    
+    {
+      "name": "Executar -> Testes Unitários",
+      "type": "python",
+      "request": "launch",
+      "module": "unittest",
+      "console": "integratedTerminal",
+      "args": [
+        "discover",
+        "-s",
+        "${workspaceFolder}/src/system/test",
+        "-p",
+        "teste_api_inova.py"
+      ],
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}"
+      }
+    }
+  ]
+}
