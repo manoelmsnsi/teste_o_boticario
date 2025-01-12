@@ -130,6 +130,7 @@ Essa aplicação foi construída em Python, utilizando , SQLAlchemy Async para i
 * Responsável pela regra de negocio e modelo com banco de dados do modulo de compra.
 
 ## ESTRUTURA DE PASTA DO PROJETO
+```
 projeto/
 │
 ├── src/
@@ -169,4 +170,5 @@ projeto/
 ├── alembic.ini
 ├── requirements.txt
 └── main.py
+```
 # MANOEL MESSIAS DA SILVA NETO
