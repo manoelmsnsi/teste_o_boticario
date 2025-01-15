@@ -17,6 +17,10 @@ from src.app.revendedor.route import backend as backend_revendedor
 app = FastAPI(
     title="O BOTICARIO",
     description="<a href='https://www.linkedin.com/in/manoel-messias-731659121/' target='__blank'>Manoel Messias da Silva Neto</a><br>",
+    contact={
+        "name": "Elastic - Logs",
+        "url": "http://0.0.0.0:5601",
+    },  
     version="0.1.0",
     
 )
